@@ -11,8 +11,16 @@ translucent="1"
       <imgbtn name="btn_restore" skin="_skin.sys.btn.restore"  pos="-83,0" show="0" animate="1" />
       <imgbtn name="btn_min" skin="_skin.sys.btn.minimize" pos="-121,0" animate="1" />
     </caption>
-    <window pos="5,[2,-5,-5">
-      <text pos="|0,|0" offset="-0.5,-0.5">这是一个由SOUI向导生成的APP框架</text>
+    <window pos="5,[2,-5,-5" layout="vbox">
+      <window size="-2,50" layout="hbox" gravity="center">
+        <button size="150,30" name="btn_init_lv" text="init list view"/>
+      </window>
+      <listview size="-2,0" weight="1" name="lv_test">
+        <template itemHeight="50" colorHover="#cccccc" colorSelected="#0000ff" trackMouseEvent="1" layout="hbox" interval="10" gravity="center">
+          <text size="-1,-1" colorText="#ff0000" name="lv_txt1">text item</text>
+          <button size="100,30" name="lv_btn1" tip="click the button to see how to writing the response function">click me</button>
+        </template>
+      </listview>
     </window>
   </root>
 </SOUI>
