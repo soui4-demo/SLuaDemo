@@ -2,26 +2,61 @@ function onBtnClose(e)
 	slog("onBtnClose");
 	local hostWnd = GetHostWndFromObject(e:Sender());
 	hostWnd:DestroyWindow();
+	PostQuitMessage();
+end
+
+function onBtnMin(e)
+	slog("onBtnMin");
+	local hostWnd = GetHostWndFromObject(e:Sender());
+	hostWnd:SendMessage(0x112,0xf020); 
+end
+
+function onBtnRestore(e)
+	slog("onBtnRestore");
+	local hostWnd = GetHostWndFromObject(e:Sender());
+	local btnMax = hostWnd:FindIChildByNameA("btn_max",-1);
+	local btnRestore = hostWnd:FindIChildByNameA("btn_restore",-1);
+	btnMax:SetVisible(1,1);
+	btnRestore:SetVisible(0,1);
+	hostWnd:SendMessage(0x112,0xf120); 
+end
+
+function onBtnMax(e)
+	slog("onBtnMax");
+	local hostWnd = GetHostWndFromObject(e:Sender());
+	local btnMax = hostWnd:FindIChildByNameA("btn_max",-1);
+	local btnRestore = hostWnd:FindIChildByNameA("btn_restore",-1);
+	btnMax:SetVisible(0,1);
+	btnRestore:SetVisible(1,1);
+	hostWnd:SendMessage(0x112,0xf030); 
 end
 
 function onLvBtnClick(e)
 	slog("onLvBtnClick");
-
+	local pBtn = toSWindow(e:Sender());
+	local pRoot = pBtn:GetIRoot();
+	local iPanel = QiIItemPanel(pRoot);
+	local index = iPanel:GetItemIndex();
+	SMessageBox(GetActiveWindow(),T("you had clicked " .. index .."item"),T"soui lua",0);
 end
 
-function lv_getView(strCtx, iPos, pItem, xmlTemplate)
+function lv_getView(strCtx, iPos, pItemPanel, xmlTemplate)
 	slog("lv_getView ipos:" .. iPos);
-	if(pItem:GetChildrenCount() == 0) then
+	local pItem = pItemPanel;
+	local nChilds = pItem:GetChildrenCount();
+	slog("lv_getView GetChildrenCount done");
+	if(nChilds == 0) then
 		pItem:InitFromXml(xmlTemplate);
+		slog("lv_getView InitFromXml done");
 	end
-	local pTxt = pItem:FindChildByNameA("lv_txt1",-1);
+	local pTxt = pItem:FindIChildByNameA("lv_txt1",-1);
 	pTxt:SetWindowText(T("hello lua " .. iPos));
-	local pBtn = pItem:FindChildByNameA("lv_btn1",-1);
-	SubscribeWindowEvent(pBtn,10000,"onLvBtnClick");
+	local pBtn = pItem:FindIChildByNameA("lv_btn1",-1);
+	LuaConnect(pBtn,10000,"onLvBtnClick");
 end
 
 function lv_getCount(strCtx)
-	return 100;
+	return 1000;
 end
 
 function onBtnInitLv(e)
@@ -29,17 +64,13 @@ function onBtnInitLv(e)
 	local hostWnd = GetHostWndFromObject(e:Sender());
 	toSWindow(e:Sender());
 	local lvTst = hostWnd:FindIChildByName(L"lv_test",-1);
-	slog("init listview, FindIChildByName done");
 	local ilvTst = QiIListView(lvTst);
-	slog("init listview, QiIListView done");
 
 	local adapter = CreateLvAdapter("test_lv");
 	adapter:initCallback(0,"lv_getView");
 	adapter:initCallback(1,"lv_getCount");
 
-	slog("init listview, init callbacks done");
 	ilvTst:SetAdapter(adapter);
-	slog("init listview, SetAdapter done");
 	adapter:Release();
 	ilvTst:Release();
 end
@@ -58,12 +89,21 @@ function main(hinst,strWorkDir,strArgs)
 	local hwnd = GetActiveWindow();
 	hostWnd:Create(hwnd,0,0,0,0);
 	hostWnd:ShowWindow(1); --1==SW_SHOWNORMAL
-	local btnClose = hostWnd:FindIChildByName(L"btn_close",-1);
-	SubscribeWindowEvent(btnClose,10000,"onBtnClose");
+	local btnClose = hostWnd:FindIChildByNameA("btn_close",-1);
+	LuaConnect(btnClose,10000,"onBtnClose"); --10000 == EVT_CMD
 
-	local btnInitLv = hostWnd:FindIChildByName(L"btn_init_lv",-1);
-	SubscribeWindowEvent(btnInitLv,10000,"onBtnInitLv");
+	local btnMax = hostWnd:FindIChildByNameA("btn_max",-1);
+	LuaConnect(btnMax,10000,"onBtnMax");
 	
+	local btnRestore = hostWnd:FindIChildByNameA("btn_restore",-1);
+	LuaConnect(btnRestore,10000,"onBtnRestore");
+
+	local btnMin = hostWnd:FindIChildByNameA("btn_min",-1);
+	LuaConnect(btnMin,10000,"onBtnMin");
+
+	local btnInitLv = hostWnd:FindIChildByNameA("btn_init_lv",-1);
+	LuaConnect(btnInitLv,10000,"onBtnInitLv");
+
 	souiFac:Release();
 	
 	slog("main done");
