@@ -66,7 +66,7 @@ function onBtnInitLv(e)
 	local lvTst = hostWnd:FindIChildByName(L"lv_test",-1);
 	local ilvTst = QiIListView(lvTst);
 
-	local adapter = CreateLvAdapter("test_lv");
+	local adapter = CreateLvAdapter(100);--100 as the context id for the listview
 	adapter:initCallback(0,"lv_getView");
 	adapter:initCallback(1,"lv_getCount");
 
