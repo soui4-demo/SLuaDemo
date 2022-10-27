@@ -12,9 +12,15 @@ translucent="1"
       <imgbtn name="btn_min" skin="_skin.sys.btn.minimize" pos="-121,0" animate="1" />
     </caption>
     <window pos="5,[2,-5,-5" layout="vbox">
-      <window size="-2,50" layout="hbox" gravity="center">
+      <window size="-2,50" layout="hbox" gravity="center" interval="10">
         <button size="150,30" name="btn_init_lv" text="init list view"/>
+		  <button size="100,30" name="btn_menu" text="menu"/>
+		  <button size="100,30" name="btn_menuex" text="menuex"/>
       </window>
+		<window size="-2,30" layout="hbox">
+			<sliderbar size="0,-2" weight="1" name="tst_slider" min="0" max="100" value="50"/>
+			<text size="100,-2" name="txt_pos" colorText="@color/red" text="50"/>
+		</window>
       <listview size="-2,0" weight="1" name="lv_test">
         <template itemHeight="50" colorHover="#cccccc" colorSelected="#0000ff" trackMouseEvent="1" layout="hbox" interval="10" gravity="center">
           <text size="-1,-1" colorText="#ff0000" name="lv_txt1">text item</text>
