@@ -41,13 +41,10 @@ function onLvBtnClick(e)
 end
 
 function lv_getView(strCtx, iPos, pItemPanel, xmlTemplate)
-	slog("lv_getView ipos:" .. iPos);
 	local pItem = pItemPanel;
 	local nChilds = pItem:GetChildrenCount();
-	slog("lv_getView GetChildrenCount done");
 	if(nChilds == 0) then
 		pItem:InitFromXml(xmlTemplate);
-		slog("lv_getView InitFromXml done");
 	end
 	local pTxt = pItem:FindIChildByNameA("lv_txt1",-1);
 	pTxt:SetWindowText(T("hello lua " .. iPos));
@@ -62,7 +59,6 @@ end
 function onBtnInitLv(e)
 	slog("init listview");
 	local hostWnd = GetHostWndFromObject(e:Sender());
-	toSWindow(e:Sender());
 	local lvTst = hostWnd:FindIChildByName(L"lv_test",-1);
 	local ilvTst = QiIListView(lvTst);
 
@@ -75,6 +71,43 @@ function onBtnInitLv(e)
 	ilvTst:Release();
 end
 
+function onBtnMenu(e)
+	slog("onBtnMenu");
+	local hostWnd = GetHostWndFromObject(e:Sender());
+	local btn = toSWindow(e:Sender());
+	local souiFac = CreateSouiFactory();
+	local menu = souiFac:CreateMenu(0);
+	souiFac:Release();
+	menu:LoadMenu(T"smenu:menu_test");
+	local rcBtn = btn:GetWindowRect2();
+	SClientToScreen(hostWnd,rcBtn);
+	local cmd = TrackPopupIMenu(menu,0x100,rcBtn.left,rcBtn.bottom,100); --ox100 == TPM_RETURNCMD
+	menu:Release();
+	slog("cmd ret ".. cmd);
+end
+
+function onBtnMenuEx(e)
+	slog("onBtnMenuEx");
+	local hostWnd = GetHostWndFromObject(e:Sender());
+	local btn = toSWindow(e:Sender());
+	local souiFac = CreateSouiFactory();
+	local menu = souiFac:CreateMenuEx();
+	souiFac:Release();
+	menu:LoadMenu(T"smenu:menuex_test");
+	local rcBtn = btn:GetWindowRect2();
+	SClientToScreen(hostWnd,rcBtn);
+	local cmd = TrackPopupIMenuEx(menu,0x100,rcBtn.left,rcBtn.bottom,100); --ox100 == TPM_RETURNCMD
+	menu:Release();
+	slog("cmd ret ".. cmd);
+end
+
+function onSlidePos(e)
+	local data=toStEventSliderPos(e:Data());
+	local hostWnd = GetHostWndFromObject(e:Sender());
+	local txt = hostWnd:FindIChildByNameA("txt_pos",-1);
+	txt:SetWindowText(T("".. data.nPos));
+end
+
 function main(hinst,strWorkDir,strArgs)
 	slog("main start");
 	local souiFac = CreateSouiFactory();
@@ -85,7 +118,7 @@ function main(hinst,strWorkDir,strArgs)
 	resMgr:AddResProvider(resProvider,T"uidef:xml_init");
 	resProvider:Release();
 
-	local hostWnd = souiFac:CreateHostWnd(T"LAYOUT:XML_MAINWND");
+	local hostWnd = souiFac:CreateHostWnd(T"LAYOUT:dlg_main");
 	local hwnd = GetActiveWindow();
 	hostWnd:Create(hwnd,0,0,0,0);
 	hostWnd:ShowWindow(1); --1==SW_SHOWNORMAL
@@ -101,9 +134,18 @@ function main(hinst,strWorkDir,strArgs)
 	local btnMin = hostWnd:FindIChildByNameA("btn_min",-1);
 	LuaConnect(btnMin,10000,"onBtnMin");
 
+	local btnMenu = hostWnd:FindIChildByNameA("btn_menu",-1);
+	LuaConnect(btnMenu,10000,"onBtnMenu");
+
+	local btnMenuEx = hostWnd:FindIChildByNameA("btn_menuex",-1);
+	LuaConnect(btnMenuEx,10000,"onBtnMenuEx");
+
 	local btnInitLv = hostWnd:FindIChildByNameA("btn_init_lv",-1);
 	LuaConnect(btnInitLv,10000,"onBtnInitLv");
+	btnInitLv:FireCommand();
 
+	local slider = hostWnd:FindIChildByNameA("tst_slider",-1);
+	LuaConnect(slider,17000,"onSlidePos");--17000==EVT_SLIDERPOS
 	souiFac:Release();
 	
 	slog("main done");

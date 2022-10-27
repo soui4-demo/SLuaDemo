@@ -41,13 +41,10 @@ function onLvBtnClick(e)
 end
 
 function lv_getView(strCtx, iPos, pItemPanel, xmlTemplate)
-	slog("lv_getView ipos:" .. iPos);
 	local pItem = pItemPanel;
 	local nChilds = pItem:GetChildrenCount();
-	slog("lv_getView GetChildrenCount done");
 	if(nChilds == 0) then
 		pItem:InitFromXml(xmlTemplate);
-		slog("lv_getView InitFromXml done");
 	end
 	local pTxt = pItem:FindIChildByNameA("lv_txt1",-1);
 	pTxt:SetWindowText(T("hello lua " .. iPos));
@@ -105,11 +102,10 @@ function onBtnMenuEx(e)
 end
 
 function onSlidePos(e)
-	local e2=toEventSliderPos(e);
+	local data=toStEventSliderPos(e:Data());
 	local hostWnd = GetHostWndFromObject(e:Sender());
 	local txt = hostWnd:FindIChildByNameA("txt_pos",-1);
-	txt:SetWindowText(T("".. e2.nPos));
-	slog("pos " .. e2.nPos)
+	txt:SetWindowText(T("".. data.nPos));
 end
 
 function main(hinst,strWorkDir,strArgs)
