@@ -3,14 +3,25 @@
 appWnd="1"
 translucent="1"
 >
-  <root skin="_skin.sys.wnd.bkgnd" cache="1"  width="400" height="300" >
+  <script src="lua:testdlg_lua"/>
+  <root skin="_skin.sys.wnd.bkgnd" cache="1"  width="600" height="400" on_init="on_init" on_exit="on_exit">
     <caption pos="0,0,-0,30" show="1" font="adding:0">
       <icon pos="10,8" src="ICON_LOGO:16"/>
       <text pos="29,9">@string/dialog</text>
-      <imgbtn name="btn_close" skin="_skin.sys.btn.close"    pos="-45,0" tip="close" animate="1"/>
+      <imgbtn id="IDCANCEL" skin="_skin.sys.btn.close"    pos="-45,0" tip="close" animate="1"/>
     </caption>
     <window pos="5,[2,-5,-5">
-      <text pos="|0,|0" offset="-0.5,-0.5">对话框测试</text>
+      <window pos="0,0,-0,-0" colorBkgnd="#cccccc">
+
+      </window>
+      
+      <window pos="0,0,@-1,-2" name="pane_left">
+        <window pos="0,0,200,-0">
+          <img pos="0,0,-0,-0" skin="skin_girl" name="img_girl"/>
+        </window>
+        <toggle pos="[0,|0,@-1,@-1" offset="0,-0.5" name="tgl_left" skin="skin_btn_expand" checked="true" on_command="on_toggle"/>
+      </window>
+
     </window>
   </root>
 </SOUI>

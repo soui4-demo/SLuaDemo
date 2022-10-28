@@ -15,4 +15,18 @@
   <colorrect name="TrayMenu_menu_bkgnd" hover="#cccccc" />
   <colorrect name="TrayMenu_menu_sep" normal="#cccccc" />
   <imgframe name="TrayMenu_border" src="ImgTrayMenu:png_menu_border" margin="2,2,2,2" />
+
+  <imglist name="skin_tree_icon" src="img:png_treeicon" states="3" />
+
+  <imglist name="skin_btn_expand" src="img:png_expand" states="6">
+    <states>
+      <state index="0" value="normal"/>
+      <state index="1" value="hover"/>
+      <state index="2" value="hover|pushdown"/>
+      <state index="3" value="normal|checked"/>
+      <state index="4" value="hover|checked"/>
+      <state index="5" value="hover|pushdown|checked"/>
+    </states>
+  </imglist>
+  <imglist name="skin_girl"	src="img:png_girl" alpha="150" filterLevel="high"/>
 </skin>

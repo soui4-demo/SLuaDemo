@@ -26,7 +26,19 @@
     <file name="menu_ico" path="image\TrayMenu\menu_ico.png" />
     <file name="png_menu_border" path="image\TrayMenu\menuborder.png" />
   </ImgTrayMenu>
+  <img>
+    <file name="png_treeicon" path="image\TreeIcon.png" />
+    <file name="png_girl" path="image\girl.png"/>
+    <file name="png_expand" path="image\btn_expand.png" />
+  </img>
   <ICON>
     <file name="ICON_LOGO"  path="image\soui.ico"/>
   </ICON>
+  <lua>
+    <file name="testdlg_lua" path="lua\testdlg.lua"/>
+  </lua>
+  <anim>
+    <file name="slide_show" path="anim\slide_show.xml"/>
+    <file name="slide_hide" path="anim\slide_hide.xml"/>
+  </anim>
 </resource>

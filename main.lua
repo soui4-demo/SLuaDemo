@@ -40,6 +40,8 @@ function onLvBtnClick(e)
 	SMessageBox(GetActiveWindow(),T("you had clicked " .. index .."item"),T"soui lua",0);
 end
 
+listview_count = 1000;
+
 function lv_getView(strCtx, iPos, pItemPanel, xmlTemplate)
 	local pItem = pItemPanel;
 	local nChilds = pItem:GetChildrenCount();
@@ -53,12 +55,11 @@ function lv_getView(strCtx, iPos, pItemPanel, xmlTemplate)
 end
 
 function lv_getCount(strCtx)
-	return 1000;
+	return listview_count;
 end
 
-function onBtnInitLv(e)
+function initListview(hostWnd)
 	slog("init listview");
-	local hostWnd = GetHostWndFromObject(e:Sender());
 	local lvTst = hostWnd:FindIChildByName(L"lv_test",-1);
 	local ilvTst = QiIListView(lvTst);
 
@@ -68,6 +69,19 @@ function onBtnInitLv(e)
 
 	ilvTst:SetAdapter(adapter);
 	adapter:Release();
+	ilvTst:Release();
+end
+
+function onBtnResetLv(e)
+	slog("onBtnResetLv");
+	local hostWnd = GetHostWndFromObject(e:Sender());
+	local lvTst = hostWnd:FindIChildByName(L"lv_test",-1);
+	local ilvTst = QiIListView(lvTst);
+	local adapter = ilvTst:GetAdapter();
+	local luaAdapter = toLuaLvAdapter(adapter); -- cast from ILvAdapter to LuaLvAdapter
+	slog("list view context =" .. luaAdapter:getContext());
+	listview_count = 5;
+	luaAdapter:notifyDataSetChanged();
 	ilvTst:Release();
 end
 
@@ -108,6 +122,27 @@ function onSlidePos(e)
 	txt:SetWindowText(T("".. data.nPos));
 end
 
+function onBtnInitTreectrl(e)
+	slog("onBtnInitTreectrl");
+	local hostWnd = GetHostWndFromObject(e:Sender());
+	local treeWnd = hostWnd:FindIChildByName(L"tree_test",-1);
+	local treeCtrl = QiITreeCtrl(treeWnd);
+	treeCtrl:RemoveAllItems();
+	local item1= treeCtrl:InsertItem(T"hello",0,1,100,0xffff0000,0xffff0002); --0xffff0000 == STVI_ROOT, 0xffff0002==STVI_LAST
+	treeCtrl:InsertItem(T"lua",0,1,100,item1,0xffff0002);
+end
+
+function onBtnDialog(e)
+	slog("onBtnDialog");
+	local btnSender = toSWindow(e:Sender());
+	local hParent = btnSender:GetHostHwnd();
+	local souiFac = CreateSouiFactory();
+	local dialog = souiFac:CreateHostDialog(T"layout:dlg_test");
+	souiFac:Release()
+	local ret = dialog:DoModal(hParent);
+	dialog:Release();
+end
+
 function main(hinst,strWorkDir,strArgs)
 	slog("main start");
 	local souiFac = CreateSouiFactory();
@@ -122,6 +157,8 @@ function main(hinst,strWorkDir,strArgs)
 	local hwnd = GetActiveWindow();
 	hostWnd:Create(hwnd,0,0,0,0);
 	hostWnd:ShowWindow(1); --1==SW_SHOWNORMAL
+	initListview(hostWnd);
+
 	local btnClose = hostWnd:FindIChildByNameA("btn_close",-1);
 	LuaConnect(btnClose,10000,"onBtnClose"); --10000 == EVT_CMD
 
@@ -140,12 +177,18 @@ function main(hinst,strWorkDir,strArgs)
 	local btnMenuEx = hostWnd:FindIChildByNameA("btn_menuex",-1);
 	LuaConnect(btnMenuEx,10000,"onBtnMenuEx");
 
-	local btnInitLv = hostWnd:FindIChildByNameA("btn_init_lv",-1);
-	LuaConnect(btnInitLv,10000,"onBtnInitLv");
-	btnInitLv:FireCommand();
+	local btnResetLv = hostWnd:FindIChildByNameA("btn_reset_lv",-1);
+	LuaConnect(btnResetLv,10000,"onBtnResetLv");
+	
+	local btnInitTreeCtrl = hostWnd:FindIChildByNameA("btn_init_treectrl",-1);
+	LuaConnect(btnInitTreeCtrl,10000,"onBtnInitTreectrl");
 
 	local slider = hostWnd:FindIChildByNameA("tst_slider",-1);
 	LuaConnect(slider,17000,"onSlidePos");--17000==EVT_SLIDERPOS
+
+	local btnDialog = hostWnd:FindIChildByNameA("btn_dialog",-1);
+	LuaConnect(btnDialog,10000,"onBtnDialog");
+
 	souiFac:Release();
 	
 	slog("main done");
