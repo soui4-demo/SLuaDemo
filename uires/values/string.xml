@@ -2,5 +2,5 @@
   <string>
     <title value="SLuaDemo"/>
     <ver value="1.0"/>
-    <dialog value="I'm dialog test"/>
+    <dialog value="About SOUI4"/>
   </string>
