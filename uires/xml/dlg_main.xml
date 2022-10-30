@@ -12,45 +12,56 @@ translucent="1"
       <imgbtn name="btn_min" skin="_skin.sys.btn.minimize" pos="-121,0" animate="1" />
     </caption>
     <window pos="5,[2,-5,-5" layout="vbox">
-      <window size="-2,50" layout="hbox" gravity="center" interval="5">
-        <button size="100,30" name="btn_reset_lv" text="reset list"/>
-        <button size="100,30" name="btn_init_treectrl" text="init tree"/>
+     <window size="-2,50" layout="hbox" gravity="center" interval="5">
+        <button size="100,30" name="btn_reset_lv" text="set list 5" tip="reset list view to 5 items"/>
+        <button size="100,30" name="btn_init_treectrl" text="init tree" tip="reload tree item by lua"/>
         <button size="100,30" name="btn_menu" text="menu"/>
         <button size="100,30" name="btn_menuex" text="menuex"/>
-        <button size="100,30" name="btn_dialog" text="dialog"/>
+        <button size="100,30" name="btn_dialog" text="About"/>
       </window>
-      <window size="-2,30" layout="hbox">
-        <sliderbar size="0,-2" weight="1" name="tst_slider" min="0" max="100" value="50"/>
-        <text size="100,-2" name="txt_pos" colorText="@color/red" text="50"/>
-      </window>
-      <window size="-2,0" weight="1" layout="hbox" interval="10">
-        <treectrl size="0,-2" weight="1" name="tree_test" margin="1" colorBorder="@color/red" itemHeight="22" indent="22" hasLines="true" iconSkin="skin_tree_icon" checkBox="1" font="underline:1">
-          <item text="组织机构" img="0" selImg="1"  expand="1">
-            <item text="市场部" img="0" selImg="1">
-              <item text="南一区" img="2"/>
-              <item text="北二区" img="2"/>
-              <item text="西三区" img="2">
-                <item text="第一分队" img="0" selImg="1" expand="0">
-                  <item text="张三组" img="2"/>
-                  <item text="李四组" img="2"/>
-                  <item text="王五组" img="2"/>
+
+      <window size="-2,0" weight="1">
+
+        <window pos="25,0,-0,-0" layout="hbox" interval="10">
+          <treectrl size="0,-2" weight="1" name="tree_test" margin="1" colorBorder="@color/red" itemHeight="22" indent="22" hasLines="true" iconSkin="skin_tree_icon" checkBox="1" font="underline:1">
+            <item text="组织机构" img="0" selImg="1"  expand="1">
+              <item text="市场部" img="0" selImg="1">
+                <item text="南一区" img="2"/>
+                <item text="北二区" img="2"/>
+                <item text="西三区" img="2">
+                  <item text="第一分队" img="0" selImg="1" expand="0">
+                    <item text="张三组" img="2"/>
+                    <item text="李四组" img="2"/>
+                    <item text="王五组" img="2"/>
+                  </item>
                 </item>
               </item>
             </item>
-          </item>
-          <item text="宣传部" img="0" selImg="1" expand="0">
-            <item text="南一区" img="2"/>
-            <item text="北二区" img="2"/>
-            <item text="西三区" img="2"/>
-          </item>
-        </treectrl>
-        <listview size="0,-2" weight="1" name="lv_test" margin="1" colorBorder="@color/red" >
-          <template itemHeight="50" colorHover="#cccccc" colorSelected="#0000ff" trackMouseEvent="1" layout="hbox" interval="10" gravity="center">
-            <text size="-1,-1" colorText="#ff0000" name="lv_txt1">text item</text>
-            <button size="100,30" name="lv_btn1" tip="click the button to see how to writing the response function">click me</button>
-          </template>
-        </listview>
-      </window>      
+            <item text="宣传部" img="0" selImg="1" expand="0">
+              <item text="南一区" img="2"/>
+              <item text="北二区" img="2"/>
+              <item text="西三区" img="2"/>
+            </item>
+          </treectrl>
+          <listview size="0,-2" weight="1" name="lv_test" margin="1" colorBorder="@color/red" >
+            <template itemHeight="50" colorHover="#cccccc" colorSelected="#0000ff" trackMouseEvent="1" layout="hbox" interval="10" gravity="center">
+              <text size="-1,-1" colorText="#ff0000" name="lv_txt1">text item</text>
+              <button size="100,30" name="lv_btn1" tip="click the button to see how to writing the response function">click me</button>
+            </template>
+          </listview>
+        </window>
+
+        <window pos="0,0,@-1,-2" name="pane_left" alpha="200">
+          <window pos="0,0,200,-0">
+            <img pos="0,0,-0,-0" skin="skin_girl" name="img_girl"/>
+            <window pos="0,0,-0,-0" layout="hbox" padding="10" gravity="center">
+              <sliderbar size="30,-2" weight="1" name="tst_slider" min="0" max="100" value="50" vertical="1"/>
+              <text size="0,30" weight="1" name="txt_pos" colorText="@color/red" text="50"/>
+            </window>
+          </window>
+          <toggle pos="[0,|0,@-1,@-1" offset="0,-0.5" name="tgl_left" skin="skin_btn_expand" checked="true"/>
+        </window>
+      </window>
     </window>
   </root>
 </SOUI>

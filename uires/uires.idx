@@ -34,9 +34,6 @@
   <ICON>
     <file name="ICON_LOGO"  path="image\soui.ico"/>
   </ICON>
-  <lua>
-    <file name="testdlg_lua" path="lua\testdlg.lua"/>
-  </lua>
   <anim>
     <file name="slide_show" path="anim\slide_show.xml"/>
     <file name="slide_hide" path="anim\slide_hide.xml"/>
