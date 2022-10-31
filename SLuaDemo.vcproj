@@ -19,7 +19,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
@@ -66,6 +66,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="utilities4d.lib soui4d.lib"
+				OutputFile="$(OutDir)\$(ProjectName)d.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;$(SOUI4PATH)\bin&quot;"
@@ -175,7 +176,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
@@ -197,7 +198,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="1"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="&quot;$(SOUI4PATH)\config&quot;;&quot;$(SOUI4PATH)\components&quot;;&quot;$(SOUI4PATH)\SOUI&quot;;&quot;$(SOUI4PATH)\SOUI\include&quot;;&quot;$(SOUI4PATH)\utilities\include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
@@ -225,7 +226,7 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="&quot;$(SOUI4PATH)\bin&quot;"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 			/>
 			<Tool
@@ -402,11 +403,19 @@
 			Filter="idx;xml;png;gif;jpg;ico;lua;bmp"
 			>
 			<File
+				RelativePath=".\bin\uires\values\color.xml"
+				>
+			</File>
+			<File
 				RelativePath=".\uires\values\color.xml"
 				>
 			</File>
 			<File
-				RelativePath=".\uires\xml\dlg_main.xml"
+				RelativePath=".\bin\uires\xml\dlg_main.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\bin\uires\xml\dlg_test.xml"
 				>
 			</File>
 			<File
@@ -414,7 +423,31 @@
 				>
 			</File>
 			<File
+				RelativePath=".\bin\main.lua"
+				>
+			</File>
+			<File
+				RelativePath=".\bin\uires\xml\menu_test.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\bin\uires\xml\menuex_test.xml"
+				>
+			</File>
+			<File
 				RelativePath=".\uires\values\skin.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\bin\uires\values\skin.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\bin\uires\anim\slide_hide.xml"
+				>
+			</File>
+			<File
+				RelativePath=".\bin\uires\anim\slide_show.xml"
 				>
 			</File>
 			<File
@@ -422,52 +455,16 @@
 				>
 			</File>
 			<File
+				RelativePath=".\bin\uires\values\string.xml"
+				>
+			</File>
+			<File
 				RelativePath=".\uires\values\string.xml"
 				>
 			</File>
 			<File
-				RelativePath=".\uires\uires.idx"
+				RelativePath=".\bin\uires\uires.idx"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description=""
-						CommandLine=""
-						Outputs=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description=""
-						CommandLine=""
-						Outputs=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description=""
-						CommandLine=""
-						Outputs=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description=""
-						CommandLine=""
-						Outputs=""
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<File
